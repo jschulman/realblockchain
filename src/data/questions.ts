@@ -11,13 +11,13 @@ export const questions: Question[] = [
     {
         id: 'prof_2',
         category: 'teachBackground',
-        text: 'How would you describe your technical background?',
+        text: 'How would you describe your background?',
         type: 'select',
         options: [
-            'Software Development',
-            'Web Development',
+            'Developer',
+            'Architect',
             'Data Science',
-            'Cloud Computing',
+            'Finance/Accounting',
             'Cybersecurity',
             'No Technical Background'
         ]
@@ -30,10 +30,10 @@ export const questions: Question[] = [
         options: [
             'Become a Blockchain Developer',
             'Understand Blockchain Technology',
-            'Smart Contract Development',
+            'Blockchain Finance and Accounting',
             'Blockchain Product Management',
             'Blockchain Consulting',
-            'Cryptocurrency Investment',
+            'Teacher/Professor',
             'Other'
         ]
     },

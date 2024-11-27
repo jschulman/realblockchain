@@ -47,8 +47,8 @@ Carefully analyze the user's responses, paying attention to their technical back
 Based on this analysis, create a personalized blockchain learning methodology that includes:
 1. A detailed learning path structure and pacing
 2. A weekly time allocation strategy
-3. Top 3 specific and unique learning recommendations
-4. Suggested detailed outline of resources and tools
+3. Top 3 specific and unique learning recommendations for each category the user selected
+4. Suggested detailed outline of resources and tools for each category the user selected
 6. A detailed weekly schedule that:
    - Aligns with their available time commitment
    - Balances theoretical learning with practical exercises
