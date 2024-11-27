@@ -44,7 +44,7 @@ const MethodologyPDF = ({ methodology }: Props) => (
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
                 <Text style={styles.title}>Your Blockchain Learning Path</Text>
-                
+
                 <Text style={styles.subtitle}>Learning Path</Text>
                 <Text style={styles.text}>{methodology.learningPath}</Text>
 
@@ -82,7 +82,7 @@ const MethodologyPDF = ({ methodology }: Props) => (
     </Document>
 );
 
-export function MethodologyDisplay({ methodology }: Props) {
+function MethodologyDisplay({ methodology }: Props) {
     const [activeSection, setActiveSection] = useState<string>('overview');
 
     const sections = [
@@ -121,8 +121,8 @@ export function MethodologyDisplay({ methodology }: Props) {
                                 className={`
                 py-4 px-6 text-sm font-medium border-b-2 transition-colors duration-200
                 ${activeSection === section.id
-                                    ? 'border-blue-500 text-blue-600'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
+                                        ? 'border-blue-500 text-blue-600'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
               `}
                             >
                                 {section.title}
@@ -246,4 +246,6 @@ export function MethodologyDisplay({ methodology }: Props) {
             </div>
         </div>
     );
-} 
+}
+
+export default MethodologyDisplay; 

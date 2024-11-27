@@ -1,7 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { UserResponse } from '@/types';
+import { UserResponse, MethodologyResponse } from '@/types';
+import dynamic from 'next/dynamic';
+
+const MethodologyDisplay = dynamic(() => import('./MethodologyDisplay').then(mod => ({ default: mod.MethodologyDisplay })), {
+    ssr: false,
+    loading: () => (
+        <div className="animate-pulse">
+            <div className="h-96 bg-gray-200 rounded-lg"></div>
+        </div>
+    )
+});
 
 interface QuestionnaireProps {
     onComplete: (responses: UserResponse[]) => Promise<void>;
@@ -103,6 +113,8 @@ export function Questionnaire({ onComplete }: QuestionnaireProps) {
     const [currentSection, setCurrentSection] = useState(0);
     const [responses, setResponses] = useState<Record<string, string | string[]>>({});
     const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [methodology, setMethodology] = useState<MethodologyResponse | null>(null);
 
     const handleNext = () => {
         const currentQuestions = QUESTIONS[currentSection].questions;
@@ -142,7 +154,28 @@ export function Questionnaire({ onComplete }: QuestionnaireProps) {
             };
         });
 
-        await onComplete(formattedResponses);
+        setIsLoading(true);
+        try {
+            const response = await fetch('/api/methodology', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formattedResponses),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to generate methodology');
+            }
+
+            const data = await response.json();
+            setMethodology(data);
+        } catch (error) {
+            console.error('Error generating methodology:', error);
+            setError('Failed to generate methodology. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleSelectChange = (question: string, value: string) => {
@@ -169,6 +202,21 @@ export function Questionnaire({ onComplete }: QuestionnaireProps) {
 
     const currentSectionData = QUESTIONS[currentSection];
     const progress = ((currentSection + 1) / QUESTIONS.length) * 100;
+
+    if (methodology) {
+        return <MethodologyDisplay methodology={methodology} />;
+    }
+
+    if (isLoading) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+                <p className="mt-4 text-lg text-gray-600">
+                    Generating your personalized learning path...
+                </p>
+            </div>
+        );
+    }
 
     return (
         <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
