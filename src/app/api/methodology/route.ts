@@ -14,6 +14,9 @@ export async function POST(request: Request) {
         // Validate input
         const userResponses = z.array(UserResponseSchema).parse(body);
 
+        // Extract selected categories from responses
+        const selectedCategories = Array.from(new Set(userResponses.map(r => r.category)));
+
         const prompt = `You are a world-class blockchain education expert and learning coach. Your task is to analyze a student's background and goals, and create a personalized blockchain learning methodology based on their responses.
 
 Here are the user's responses:
@@ -22,7 +25,7 @@ ${JSON.stringify(userResponses, null, 2)}
 Create a personalized blockchain learning methodology that includes:
 1. A detailed learning path structure and pacing
 2. A weekly time allocation strategy
-3. Top 3 specific and unique learning recommendations
+3. For each category (${selectedCategories.join(', ')}), provide 3 specific and unique learning recommendations
 4. Suggested detailed outline of resources and tools
 5. A detailed weekly schedule
 
@@ -30,8 +33,12 @@ IMPORTANT: Your response must be a valid JSON object with the following structur
 {
     "learningPath": "string",
     "timeStrategy": "string",
-    "recommendations": ["string"],
-    "potentialChallenges": ["string"],
+    "recommendations": [
+        {
+            "category": "string (one of: ${selectedCategories.join(', ')})",
+            "items": ["string", "string", "string"]
+        }
+    ],
     "suggestedResources": ["string"],
     "weeklySchedule": {
         "schedule": [
@@ -56,7 +63,9 @@ IMPORTANT NOTES:
 1. The "category" field in schedule blocks MUST be one of: "learning", "practical", "review", or "project"
 2. The "day" field MUST be a valid day of the week (Monday through Sunday)
 3. Times should be in 24-hour format (e.g., "09:00", "14:30")
-4. Each array should contain at least one item`;
+4. Each array should contain at least one item
+5. For recommendations, provide exactly 3 specific and actionable items for each category
+6. Make recommendations highly specific to the user's background and goals`;
 
         const completion = await openai.chat.completions.create({
             messages: [{ role: "user", content: prompt }],

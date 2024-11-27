@@ -25,11 +25,15 @@ export const WeeklyScheduleSchema = z.object({
     notes: z.array(z.string()),
 });
 
+export const RecommendationSchema = z.object({
+    category: z.string(),
+    items: z.array(z.string()),
+});
+
 export const MethodologyResponseSchema = z.object({
     learningPath: z.string(),
     timeStrategy: z.string(),
-    recommendations: z.array(z.string()),
-    potentialChallenges: z.array(z.string()),
+    recommendations: z.array(RecommendationSchema),
     suggestedResources: z.array(z.string()),
     weeklySchedule: WeeklyScheduleSchema,
 });
@@ -39,6 +43,7 @@ export type UserResponse = z.infer<typeof UserResponseSchema>;
 export type MethodologyBlock = z.infer<typeof MethodologyBlockSchema>;
 export type DaySchedule = z.infer<typeof DayScheduleSchema>;
 export type WeeklySchedule = z.infer<typeof WeeklyScheduleSchema>;
+export type Recommendation = z.infer<typeof RecommendationSchema>;
 export type MethodologyResponse = z.infer<typeof MethodologyResponseSchema>;
 
 // Store types
