@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { UserResponse, MethodologyResponse } from '@/types';
 import dynamic from 'next/dynamic';
 
-const MethodologyDisplay = dynamic(() => import('./MethodologyDisplay').then(mod => ({ default: mod.MethodologyDisplay })), {
+const DynamicMethodologyDisplay = dynamic(() => import('./MethodologyDisplay'), {
     ssr: false,
     loading: () => (
         <div className="animate-pulse">
@@ -12,10 +12,6 @@ const MethodologyDisplay = dynamic(() => import('./MethodologyDisplay').then(mod
         </div>
     )
 });
-
-interface QuestionnaireProps {
-    onComplete: (responses: UserResponse[]) => Promise<void>;
-}
 
 const QUESTIONS = [
     {
@@ -109,7 +105,7 @@ const QUESTIONS = [
     }
 ];
 
-export function Questionnaire({ onComplete }: QuestionnaireProps) {
+const Questionnaire: React.FC = () => {
     const [currentSection, setCurrentSection] = useState(0);
     const [responses, setResponses] = useState<Record<string, string | string[]>>({});
     const [error, setError] = useState<string | null>(null);
@@ -204,7 +200,7 @@ export function Questionnaire({ onComplete }: QuestionnaireProps) {
     const progress = ((currentSection + 1) / QUESTIONS.length) * 100;
 
     if (methodology) {
-        return <MethodologyDisplay methodology={methodology} />;
+        return <DynamicMethodologyDisplay methodology={methodology} />;
     }
 
     if (isLoading) {
@@ -310,4 +306,6 @@ export function Questionnaire({ onComplete }: QuestionnaireProps) {
             </div>
         </div>
     );
-} 
+};
+
+export default Questionnaire; 

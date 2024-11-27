@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { MethodologyResponse } from '@/types';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
-interface Props {
+interface MethodologyDisplayProps {
     methodology: MethodologyResponse;
 }
 
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 });
 
 // PDF Document Component
-const MethodologyPDF = ({ methodology }: Props) => (
+const MethodologyPDF = ({ methodology }: MethodologyDisplayProps) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.section}>
@@ -82,7 +82,7 @@ const MethodologyPDF = ({ methodology }: Props) => (
     </Document>
 );
 
-function MethodologyDisplay({ methodology }: Props) {
+const MethodologyDisplay: React.FC<MethodologyDisplayProps> = ({ methodology }) => {
     const [activeSection, setActiveSection] = useState<string>('overview');
 
     const sections = [
@@ -246,6 +246,6 @@ function MethodologyDisplay({ methodology }: Props) {
             </div>
         </div>
     );
-}
+};
 
 export default MethodologyDisplay; 

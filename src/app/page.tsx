@@ -2,16 +2,7 @@ import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
 // Dynamically import client components
-const Questionnaire = dynamic(() => import('@/components/Questionnaire').then(mod => ({ default: mod.Questionnaire })), {
-  ssr: false,
-  loading: () => (
-    <div className="animate-pulse">
-      <div className="h-96 bg-gray-200 rounded-lg"></div>
-    </div>
-  )
-});
-
-const MethodologyDisplay = dynamic(() => import('@/components/MethodologyDisplay').then(mod => ({ default: mod.MethodologyDisplay })), {
+const DynamicQuestionnaire = dynamic(() => import('@/components/Questionnaire'), {
   ssr: false,
   loading: () => (
     <div className="animate-pulse">
@@ -39,7 +30,7 @@ export default function Home() {
             <div className="h-96 bg-gray-200 rounded-lg"></div>
           </div>
         }>
-          <Questionnaire />
+          <DynamicQuestionnaire />
         </Suspense>
       </div>
     </main>
