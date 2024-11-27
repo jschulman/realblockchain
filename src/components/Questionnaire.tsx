@@ -160,15 +160,22 @@ const Questionnaire: React.FC = () => {
                 body: JSON.stringify(formattedResponses),
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                throw new Error('Failed to generate methodology');
+                console.error('API Error:', data);
+                throw new Error(data.error || 'Failed to generate methodology');
             }
 
-            const data = await response.json();
+            if (data.error) {
+                console.error('Methodology Error:', data);
+                throw new Error(data.error);
+            }
+
             setMethodology(data);
         } catch (error) {
             console.error('Error generating methodology:', error);
-            setError('Failed to generate methodology. Please try again.');
+            setError(error instanceof Error ? error.message : 'Failed to generate methodology. Please try again.');
         } finally {
             setIsLoading(false);
         }
