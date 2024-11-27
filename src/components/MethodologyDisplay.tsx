@@ -28,6 +28,12 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         marginTop: 16
     },
+    categoryTitle: {
+        fontSize: 16,
+        marginBottom: 6,
+        marginTop: 12,
+        color: '#4B5563'
+    },
     text: {
         fontSize: 12,
         marginBottom: 5
@@ -51,31 +57,38 @@ const MethodologyPDF = ({ methodology }: MethodologyDisplayProps) => (
                 <Text style={styles.subtitle}>Time Strategy</Text>
                 <Text style={styles.text}>{methodology.timeStrategy}</Text>
 
-                <Text style={styles.subtitle}>Key Recommendations</Text>
+                <Text style={styles.subtitle}>Recommendations</Text>
                 {methodology.recommendations.map((rec, index) => (
-                    <Text key={index} style={styles.text}>• {rec}</Text>
+                    <View key={index}>
+                        <Text style={styles.categoryTitle}>{rec.category} Recommendations</Text>
+                        {rec.items.map((item, itemIndex) => (
+                            <Text key={itemIndex} style={styles.text}>• {item}</Text>
+                        ))}
+                    </View>
                 ))}
 
                 <Text style={styles.subtitle}>Weekly Schedule</Text>
                 {methodology.weeklySchedule.schedule.map((day, dayIndex) => (
                     <View key={dayIndex}>
-                        <Text style={styles.text}>{day.day}</Text>
+                        <Text style={styles.categoryTitle}>{day.day}</Text>
                         {day.blocks.map((block, blockIndex) => (
                             <Text key={blockIndex} style={styles.scheduleBlock}>
                                 {block.startTime} - {block.endTime}: {block.activity}
+                                {'\n'}Description: {block.description}
+                                {'\n'}Category: {block.category}
                             </Text>
                         ))}
                     </View>
                 ))}
 
+                <Text style={styles.subtitle}>Schedule Notes</Text>
+                {methodology.weeklySchedule.notes.map((note, index) => (
+                    <Text key={index} style={styles.text}>• {note}</Text>
+                ))}
+
                 <Text style={styles.subtitle}>Suggested Resources</Text>
                 {methodology.suggestedResources.map((resource, index) => (
                     <Text key={index} style={styles.text}>• {resource}</Text>
-                ))}
-
-                <Text style={styles.subtitle}>Potential Challenges</Text>
-                {methodology.potentialChallenges.map((challenge, index) => (
-                    <Text key={index} style={styles.text}>• {challenge}</Text>
                 ))}
             </View>
         </Page>
@@ -110,8 +123,8 @@ const MethodologyDisplay: React.FC<MethodologyDisplayProps> = ({ methodology }) 
                                 key={section}
                                 onClick={() => setActiveSection(section)}
                                 className={`py-4 px-6 text-sm font-medium border-b-2 ${activeSection === section
-                                        ? 'border-blue-500 text-blue-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                    ? 'border-blue-500 text-blue-600'
+                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                     }`}
                             >
                                 {section.charAt(0).toUpperCase() + section.slice(1)}
