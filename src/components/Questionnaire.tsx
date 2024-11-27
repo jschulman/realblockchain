@@ -24,8 +24,9 @@ const QUESTIONS = [
                 options: [
                     'Software Developer',
                     'Student',
-                    'Business Professional',
-                    'Entrepreneur',
+                    'Consultant',
+                    'Finance/Accounting',
+                    'Teacher/Professor',
                     'Other'
                 ]
             },
@@ -61,15 +62,14 @@ const QUESTIONS = [
                 ]
             },
             {
-                question: 'Which blockchain platforms interest you?',
+                question: 'Which blockchain functions interest you?',
                 category: 'technical',
                 type: 'multiSelect',
                 options: [
-                    'Ethereum',
-                    'Solana',
-                    'Polkadot',
-                    'Cardano',
-                    'Bitcoin',
+                    'Smart Contracts/Applications',
+                    'Tracking/Supply Chain',
+                    'Finance/Accounting',
+                    'Security/Blockchain Architecture',
                     'Other'
                 ]
             }
@@ -94,11 +94,11 @@ const QUESTIONS = [
                 category: 'preferences',
                 type: 'multiSelect',
                 options: [
-                    'Build DApps',
-                    'Smart Contract Development',
-                    'Blockchain Architecture',
-                    'Cryptocurrency Trading',
-                    'Web3 Business Development'
+                    '101 Understanding',
+                    'Be a developer',
+                    'Blockchain Consultant',
+                    'Teach Others',
+                    'Finance/Accounting'
                 ]
             }
         ]
