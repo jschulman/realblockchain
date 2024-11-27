@@ -35,7 +35,7 @@ export async function generateMethodology(
       responsesCount: userResponses.length
     });
 
-    const prompt = `You are a world-class blockchain education expert and learning coach. Your task is to analyze a student's background and goals, and create a personalized blockchain learning methodology based on their responses.
+    const prompt = `You are a world-class blockchain education expert and learning coach. Your task is to analyze a student's background and goals, and create a personalized blockchain learning course based on their responses.
 
 Here are the user's responses:
 <user_responses>
@@ -45,11 +45,10 @@ ${JSON.stringify(userResponses, null, 2)}
 Carefully analyze the user's responses, paying attention to their technical background, specific blockchain learning goals, preferred learning styles, and available time commitment.
 
 Based on this analysis, create a personalized blockchain learning methodology that includes:
-1. A detailed learning path structure and pacing
-2. A weekly time allocation strategy
-3. Top 3 specific and unique learning recommendations for each category the user selected
-4. Suggested detailed outline of resources and tools for each category the user selected
-6. A detailed weekly schedule that:
+1. A detailed learning path structure and pacing with specific reading, video, and coding assignments for each category the user selected
+2. A weekly time allocation strategy with specific times for each category the user selected
+3. Top 3 specific and unique learning recommendations for each category the user selected where you outline the specific resources you recommend for each category the user selected
+4. A detailed weekly schedule that:
    - Aligns with their available time commitment
    - Balances theoretical learning with practical exercises
    - Incorporates their preferred learning styles
@@ -63,14 +62,13 @@ Ensure that your response is:
 - Focused on their specific blockchain learning goals
 - Aligned with their preferred learning styles
 - Realistic for their time commitment
-- Written in an encouraging, coaching tone
+- Provides specific books, podcasts, and videos for each category the user selected
 
 Format your response in JSON with the following structure:
 {
   "learningPath": "string",
   "timeStrategy": "string",
   "recommendations": ["string", "string", "string"],
-  "potentialChallenges": ["string", "string", "string"],
   "suggestedResources": ["string", "string", "string"],
   "weeklySchedule": {
     "schedule": [
